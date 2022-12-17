@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "sass": "^1.55.0",
@@ -19,6 +20,8 @@
     "@babylonjs/loaders": "4.2.0",
     "babylon-vrm-loader": "1.6.0",
     "csv": "^6.2.1",
-    "fs": "^0.0.1-security"
+    "dist": "^0.1.2",
+    "fs": "^0.0.1-security",
+    "gh-pages": "^4.0.0"
   }
 }

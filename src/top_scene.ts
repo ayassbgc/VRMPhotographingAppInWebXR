@@ -50,19 +50,24 @@ import 'babylon-vrm-loader';
 //import { text } from 'stream/consumers';
 import { update_bvh_motion, read_bvh_file} from './bvh_data';
 
+//model file
+import glbModel from '../models/takahashi.vrm?url';
+
 
 export async function createScene(canvas:HTMLCanvasElement, engine:BABYLON.Engine):Promise<BABYLON.Scene > {
 
   read_bvh_file();
    //const scene = new BABYLON.Scene(engine);
 
+  // parse url
+  const folderName = glbModel.split('/').slice(0, -1).join('/').concat('/');
+  const fileName = glbModel.split('/').slice(-1)[0];
     
-  const scene = await BABYLON.SceneLoader.LoadAsync(
-  // 'https://raw.githubusercontent.com/ayassbgc/MyFileUploadForBabylonjs/main/', //GitLabクラウドから持ち込みたい場合
-    './models/', //ローカルファイルを持ち込みたい場合
-    'takahashi.vrm',
-    engine
-  );
+  const scene = await BABYLON.SceneLoader.LoadAsync(folderName, fileName, engine);
+
+
+
+  
   let vrmManager = scene.metadata.vrmManagers[0];
 
   // Update secondary animation
@@ -110,11 +115,11 @@ export async function createScene(canvas:HTMLCanvasElement, engine:BABYLON.Engin
   createHederForDescription(advancedTexture);
 
   //move XRCamera
-  moveXRCamera(scene,xrHelper);
+  moveXRCamera(xrHelper);
 
   //teke pictures
   screenShot(scene, engine, camera);
-  screenShotForXR(scene, engine, xrHelper); //★これ悪いかも
+  screenShotForXR(engine, xrHelper); //★これ悪いかも
 
 
   return scene;
@@ -165,7 +170,7 @@ export async function createScene(canvas:HTMLCanvasElement, engine:BABYLON.Engin
 
   let mycolor = new BABYLON.Color3;
   StaticParameters.gaming_num += 1;
-  let hue: number = 1;
+  //let hue: number = 1;
   BABYLON.Color3.HSVtoRGBToRef(1,0,1,mycolor);
   light.diffuse = mycolor;
   //light2.diffuse = mycolor;
@@ -254,7 +259,7 @@ function createSkybox(scene: BABYLON.Scene) {
   return 0;
 }
 
-function moveXRCamera(scene: BABYLON.Scene,xrHelper: BABYLON.WebXRDefaultExperience){
+function moveXRCamera(xrHelper: BABYLON.WebXRDefaultExperience){
   xrHelper.input.onControllerAddedObservable.add((controller) => {
       controller.onMotionControllerInitObservable.add((motionController) => {
           if (motionController.handness === 'left') {
@@ -296,7 +301,7 @@ function moveXRCamera(scene: BABYLON.Scene,xrHelper: BABYLON.WebXRDefaultExperie
  * @param xrHelper: BABYLON.WebXRDefaultExperience
  * @return 0: number
  */
- function screenShotForXR(scene:BABYLON.Scene, engine: BABYLON.Engine, xrHelper: BABYLON.WebXRDefaultExperience) {
+ function screenShotForXR(engine: BABYLON.Engine, xrHelper: BABYLON.WebXRDefaultExperience) {
   //コントローラーの登録
   xrHelper.input.onControllerAddedObservable.add((controller) => {
       controller.onMotionControllerInitObservable.add((motionController) => {
