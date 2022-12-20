@@ -7,7 +7,7 @@
     //"lib": ["ESNext", "DOM"],
     "lib": ["dom"],
 		"module": "es6",
-		"outDir": "./dist",
+		"outDir": "./dist/",
     "moduleResolution": "Node",
     "strict": true,
     "sourceMap": true,
