@@ -1,4 +1,3 @@
-import { text } from 'stream/consumers';
 import * as BABYLON from '@babylonjs/core';
 import 'babylon-vrm-loader';
 
@@ -316,7 +315,7 @@ export function read_bvh_file(){
         reader.readAsText(file[0]);
         
         //読込終了後の処理
-            reader.onload = function(ev:ProgressEvent){
+            reader.onload = function(){
             // テキストファイルの内容を変数に格納
             string_text_file = reader.result as string;
             
