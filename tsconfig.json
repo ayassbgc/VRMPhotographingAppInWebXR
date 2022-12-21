@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "/VRMPhotographingAppInWebXR/",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
